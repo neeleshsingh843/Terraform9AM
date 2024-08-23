@@ -36,7 +36,36 @@ tags = {
   name="PVT_SUB"
 }
 }
+#ELASTIC IP ALLOCATION
+resource "aws_eip" "nateip" {
+  depends_on = [ aws_internet_gateway.cust_ig ]
+  
+}
 
+#CREATION OF NAT GATEWAY
+resource "aws_nat_gateway" "NAT" {
+allocation_id = aws_eip.nateip.id
+subnet_id = aws_subnet.public.id
+tags = {
+  name= "TF NAT"
+}
+
+}
+
+#create route table and attch to NAT
+resource "aws_route_table" "pvt_rt" {
+  vpc_id = aws_vpc.cust.id
+  route{
+nat_gateway_id = aws_nat_gateway.NAT.id
+cidr_block = "0.0.0.0/0"
+  }
+}
+
+#SUBNET ASSOCIATION WITH PVT RT
+resource "aws_route_table_association" "name" {
+  route_table_id = aws_route_table.pvt_rt.id
+   subnet_id = aws_subnet.private.id
+}
 
 #CREATION OF ROUTE TABLES AND ATTACH TO IG
 
