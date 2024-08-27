@@ -7,12 +7,12 @@ variable "ami" {
 variable "instance_type" {
     description = "inserting instance type "
     type = string
-    default = "t2.micro"
+    default = ""
   
 }
 variable "key_name" {
     description = "inserting key "
     type = string
-    default = "mykp2"
+    default = ""
   
 }
