@@ -1,7 +1,7 @@
 variable "ami" {
     description = "inserting ami values to main.tf"
     type = string
-    default = "ami-0a4408457f9a03be3"
+    default = ""
   
 }
 variable "instance_type" {
